@@ -1,0 +1,852 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Sora:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--blue:#2758ac;--orange:#f47a37;--text-dark:#111827;--text-muted:#5a6e9a;--border:#d0daf0}
+body{font-family:'Sora',sans-serif;background:#fff;color:var(--text-dark);font-size:15px;line-height:1.6}
+
+/* === TOP NAVIGATION === */
+.topnav{background:#fff;border-bottom:1px solid var(--border);padding:0 48px;display:flex;align-items:center;justify-content:space-between;height:64px;position:relative;z-index:50}
+.nav-logo{font-family:'Manrope',sans-serif;font-weight:800;font-size:20px;color:var(--blue);letter-spacing:-0.5px}
+.nav-menu{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-menu>li{position:relative}
+.nav-menu>li>a, .nav-menu>li>span{display:block;padding:22px 14px;font-size:13px;font-weight:600;color:var(--text-dark);text-decoration:none;cursor:pointer;font-family:'Sora',sans-serif;letter-spacing:0.2px}
+.nav-menu>li>a:hover, .nav-menu>li>span:hover{color:var(--blue)}
+.nav-menu>li.active>a, .nav-menu>li.active>span{color:var(--blue)}
+.nav-menu>li.active::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:2px;background:var(--orange)}
+.has-dd>span::after{content:"";display:inline-block;margin-left:6px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid currentColor;vertical-align:middle;transform:translateY(-1px)}
+.dropdown{position:absolute;top:100%;left:0;background:#fff;border:1px solid var(--border);min-width:260px;padding:10px 0;box-shadow:0 8px 24px rgba(17,24,39,0.08);opacity:0;visibility:hidden;transform:translateY(-4px);transition:all 0.15s}
+.nav-menu>li.has-dd:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
+.dd-section-label{display:flex;align-items:center;gap:10px;padding:8px 18px 6px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue)}
+.dd-section-label .tag-line{width:18px;height:1.5px;background:var(--blue)}
+.dropdown a{display:flex;align-items:center;justify-content:space-between;padding:9px 18px;font-size:13px;color:var(--text-dark);text-decoration:none;font-weight:500}
+.dropdown a:hover{background:#f5f7fc;color:var(--blue)}
+.dropdown a.disabled{color:var(--text-muted);cursor:not-allowed;opacity:0.65}
+.dropdown a.disabled:hover{background:transparent;color:var(--text-muted)}
+.dd-soon{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--orange);border:1px solid var(--orange);padding:1px 6px}
+.dd-divider{height:1px;background:var(--border);margin:8px 0}
+.nav-cta{background:var(--orange);color:#fff;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Sora',sans-serif}
+.nav-cta:hover{opacity:0.9}
+
+/* === BREADCRUMB === */
+.crumb{padding:18px 48px 0;font-size:12px;color:var(--text-muted);font-family:'Sora',sans-serif}
+.crumb a{color:var(--text-muted);text-decoration:none}
+.crumb a:hover{color:var(--blue)}
+.crumb .sep{margin:0 8px;color:var(--border)}
+.crumb .cur{color:var(--blue);font-weight:600}
+
+/* === HERO === */
+.hero{background:#fff;padding:36px 48px 48px}
+.section-tag{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.tag-line{width:36px;height:1.5px;background:var(--blue)}
+.tag-text{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue)}
+.hero h1{font-family:'Manrope',sans-serif;font-size:52px;font-weight:800;color:var(--text-dark);line-height:1.05;margin-bottom:24px;letter-spacing:-1.5px;max-width:620px}
+.hero-underline{width:52px;height:3px;background:var(--blue);margin-bottom:24px}
+.hero p{color:var(--text-muted);font-size:16px;max-width:500px;margin-bottom:28px;line-height:1.7}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn-orange{background:var(--orange);color:#fff;padding:12px 26px;font-weight:700;font-size:14px;text-decoration:none;display:inline-block;border:none;cursor:pointer;font-family:'Sora',sans-serif;border-radius:0}
+.btn-orange:hover{opacity:0.9}
+.btn-outline-dark{background:transparent;color:var(--text-dark);padding:12px 26px;font-weight:600;font-size:14px;text-decoration:none;display:inline-block;border:2px solid var(--border);cursor:pointer;font-family:'Sora',sans-serif;border-radius:0}
+.btn-outline-dark:hover{border-color:var(--blue);color:var(--blue)}
+.hero-count{font-size:13px;color:var(--text-muted);margin-top:20px}
+.hero-count strong{color:var(--blue)}
+
+.divider{height:1px;background:var(--border);margin:0 48px}
+
+/* === FILTERS === */
+.filters{background:#fff;padding:32px 48px 0}
+.filter-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.filter-toggle{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--text-dark);padding:11px 20px;font-size:13px;font-weight:700;border:1.5px solid var(--border);cursor:pointer;font-family:'Sora',sans-serif;border-radius:0;letter-spacing:0.3px;transition:all 0.15s;position:relative}
+.filter-toggle:hover{border-color:var(--blue);color:var(--blue)}
+.filter-toggle .ft-icon{display:inline-flex;flex-direction:column;gap:2.5px}
+.filter-toggle .ft-icon span{display:block;width:13px;height:1.5px;background:currentColor}
+.filter-toggle .ft-icon span:nth-child(2){width:9px}
+.filter-toggle .ft-icon span:nth-child(3){width:5px}
+.filter-toggle .ft-chev{margin-left:4px;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform 0.2s}
+.filter-toggle.open .ft-chev{transform:rotate(180deg)}
+.filter-toggle.applied{background:var(--blue);color:#fff;border-color:var(--blue);padding-right:14px}
+.filter-toggle.applied:hover{opacity:0.9;border-color:var(--blue);color:#fff}
+.filter-count{display:none;align-items:center;justify-content:center;min-width:20px;height:20px;background:var(--orange);color:#fff;font-size:11px;font-weight:700;padding:0 6px;margin-left:4px}
+.filter-toggle.applied .filter-count{display:inline-flex}
+.filter-applied-summary{font-size:12px;color:var(--text-muted);font-family:'Sora',sans-serif}
+.filter-applied-summary strong{color:var(--blue);font-weight:600}
+
+.filter-panel{max-height:0;overflow:hidden;transition:max-height 0.35s ease,margin-top 0.35s ease,opacity 0.25s ease;opacity:0;margin-top:0}
+.filter-panel.open{max-height:600px;opacity:1;margin-top:20px}
+.filter-panel-inner{border:1px solid var(--border);border-left:3px solid var(--blue);padding:24px 28px 20px;background:#fbfcfe}
+.filters-title{font-family:'Sora',sans-serif;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.filters-title .tag-line{width:36px;height:1.5px;background:var(--blue)}
+.filter-row{display:flex;align-items:flex-start;gap:24px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.filter-row:last-of-type{border-bottom:none;margin-bottom:18px}
+.filter-label{flex-shrink:0;width:140px;padding-top:8px;font-size:12px;font-weight:600;color:var(--text-dark);font-family:'Sora',sans-serif}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;color:var(--text-dark);padding:7px 14px;font-size:12px;font-weight:600;border:1.5px solid var(--border);cursor:pointer;font-family:'Sora',sans-serif;border-radius:0;letter-spacing:0.2px}
+.chip:hover{border-color:var(--blue);color:var(--blue)}
+.chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+.filter-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:8px;border-top:1px dashed var(--border);margin-top:4px}
+.filter-reset{background:transparent;border:none;font-size:12px;color:var(--text-muted);cursor:pointer;font-family:'Sora',sans-serif;text-decoration:underline;padding:8px 0}
+.filter-reset:hover{color:var(--blue)}
+.filter-save-btns{display:flex;gap:10px}
+.btn-save{background:var(--orange);color:#fff;padding:10px 24px;font-weight:700;font-size:13px;border:none;cursor:pointer;font-family:'Sora',sans-serif;border-radius:0;letter-spacing:0.3px}
+.btn-save:hover{opacity:0.9}
+.btn-cancel{background:transparent;color:var(--text-dark);padding:10px 22px;font-weight:600;font-size:13px;border:1.5px solid var(--border);cursor:pointer;font-family:'Sora',sans-serif;border-radius:0}
+.btn-cancel:hover{border-color:var(--text-dark)}
+
+/* === VIDEOS === */
+.videos-section{background:#fff;padding:32px 48px 60px}
+.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.video-card{background:var(--blue);overflow:hidden;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column}
+.video-card:hover{transform:translateY(-3px)}
+.video-thumb{position:relative;aspect-ratio:16/9;background:#000;display:flex;align-items:center;justify-content:center}
+.thumb-lines{position:absolute;inset:0;opacity:0.07;background-image:repeating-linear-gradient(90deg,transparent,transparent 30px,#fff 30px,#fff 31px)}
+.play-wrap{position:relative;z-index:1;width:48px;height:48px;background:var(--orange);display:flex;align-items:center;justify-content:center;transition:opacity 0.15s}
+.video-card:hover .play-wrap{opacity:0.85}
+.play-tri{width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:15px solid #fff;margin-left:4px}
+.v-badge{position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;font-size:9px;font-weight:700;padding:3px 8px;letter-spacing:1px;text-transform:uppercase}
+.v-dur{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.7);color:#fff;font-size:11px;padding:2px 7px}
+.v-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,0.18);display:none}
+.video-card.watched .v-progress{display:block}
+.v-progress-fill{height:100%;background:var(--orange);width:0%}
+.v-watched-tag{display:none;position:absolute;bottom:12px;left:14px;color:var(--orange);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;font-family:'Sora',sans-serif;text-shadow:0 1px 4px rgba(0,0,0,0.6)}
+.video-card.watched .v-watched-tag{display:block}
+.video-info{padding:16px 16px 18px;display:flex;flex-direction:column;flex:1}
+.v-cat{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.v-cat-line{width:22px;height:1.5px;background:rgba(255,255,255,0.35);flex-shrink:0}
+.v-cat-text{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.55)}
+.v-title{font-size:13px;font-weight:600;color:#fff;line-height:1.4;margin-bottom:8px}
+.v-desc{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.55;margin-bottom:12px;flex:1}
+.v-meta{font-size:11px;color:rgba(255,255,255,0.4);padding-top:10px;border-top:1px solid rgba(255,255,255,0.1)}
+
+/* === VIDEO MODAL === */
+body.modal-open{overflow:hidden}
+.modal-overlay{position:fixed;inset:0;background:rgba(11,20,40,0.82);z-index:1000;display:none;align-items:center;justify-content:center;padding:40px 20px;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;transition:opacity 0.2s ease}
+.modal-overlay.open{display:flex;opacity:1}
+.modal{width:54%;max-width:840px;background:var(--blue);position:relative;border:1px solid rgba(255,255,255,0.08);box-shadow:0 24px 60px rgba(0,0,0,0.4);transform:translateY(8px);transition:transform 0.25s ease;display:flex;flex-direction:column;max-height:calc(100vh - 80px)}
+.modal-overlay.open .modal{transform:translateY(0)}
+.modal-close{position:absolute;top:-44px;right:0;background:var(--blue);border:none;cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;color:#fff;z-index:5;width:32px;height:32px;transition:opacity 0.15s}
+.modal-close:hover{opacity:0.88}
+.mc-x{font-size:14px;line-height:1;font-weight:400;font-family:'Sora',sans-serif}
+
+/* --- Custom video player --- */
+.modal-video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#000;flex-shrink:0;overflow:hidden;font-family:'Sora',sans-serif}
+.modal-video{width:100%;height:100%;display:block;background:#000;cursor:pointer}
+.modal-video::cue{background:rgba(0,0,0,0.78);color:#fff;font-family:'Sora',sans-serif}
+
+/* Center play/pause button */
+.player-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:transparent;border:none;cursor:pointer;padding:0;z-index:3;transition:opacity 0.2s ease,transform 0.2s ease;pointer-events:auto}
+.player-center.hidden{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(0.92)}
+.pc-square{width:90px;height:90px;background:var(--orange);display:flex;align-items:center;justify-content:center;transition:opacity 0.15s,transform 0.15s}
+.player-center:hover .pc-square{opacity:0.9;transform:scale(1.04)}
+.pc-icon-play-big{width:0;height:0;border-top:21px solid transparent;border-bottom:21px solid transparent;border-left:32px solid #fff;margin-left:7px}
+.pc-icon-pause-big{display:none;width:24px;height:33px;border-left:9px solid #fff;border-right:9px solid #fff;box-sizing:content-box}
+.player-center.is-pause .pc-icon-play-big{display:none}
+.player-center.is-pause .pc-icon-pause-big{display:block}
+
+/* Bottom controls bar */
+.player-bar{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,0.55) 35%,rgba(0,0,0,0.88) 100%);padding:36px 14px 10px;z-index:2;opacity:1;transition:opacity 0.25s ease}
+.player-bar.hidden{opacity:0;pointer-events:none}
+
+/* Progress / scrubber */
+.pb-progress{position:relative;height:4px;background:rgba(255,255,255,0.22);cursor:pointer;margin-bottom:8px;transition:height 0.15s ease;border-radius:0}
+.pb-progress:hover{height:6px}
+.pb-buffered{position:absolute;left:0;top:0;bottom:0;background:rgba(255,255,255,0.32);width:0%}
+.pb-played{position:absolute;left:0;top:0;bottom:0;background:var(--orange);width:0%}
+.pb-handle{position:absolute;top:50%;transform:translate(-50%,-50%);width:12px;height:12px;background:var(--orange);left:0%;opacity:0;transition:opacity 0.15s}
+.pb-progress:hover .pb-handle,.pb-progress.dragging .pb-handle{opacity:1}
+
+/* Bottom row */
+.pb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:28px}
+.pb-left,.pb-right{display:flex;align-items:center;gap:4px}
+
+/* Generic control button */
+.pb-btn{background:transparent;border:none;color:#fff;cursor:pointer;padding:6px 8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;line-height:1;transition:color 0.15s;border-radius:0}
+.pb-btn:hover{color:var(--orange)}
+.pb-btn svg{width:18px;height:18px;display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}
+
+/* Volume (right side, slider expands LEFT on hover) */
+.pb-volume{display:flex;align-items:center;flex-direction:row-reverse}
+.pb-vol-slider{width:0;height:4px;background:rgba(255,255,255,0.22);position:relative;cursor:pointer;transition:width 0.2s ease,margin 0.2s ease,opacity 0.2s;opacity:0;overflow:visible}
+.pb-volume:hover .pb-vol-slider,.pb-volume.active .pb-vol-slider{width:60px;margin:0 2px 0 8px;opacity:1}
+.pb-vol-fill{position:absolute;left:0;top:0;bottom:0;background:#fff;width:80%}
+.pb-vol-handle{position:absolute;top:50%;transform:translate(-50%,-50%);width:10px;height:10px;background:#fff;left:80%;opacity:0;transition:opacity 0.15s}
+.pb-volume:hover .pb-vol-handle{opacity:1}
+
+/* Time */
+.pb-time{display:flex;align-items:center;gap:4px;color:rgba(255,255,255,0.9);font-size:11px;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:0.3px;padding:0 6px}
+.pb-time-sep{color:rgba(255,255,255,0.5)}
+
+/* Speed menu */
+.pb-speed{position:relative}
+.pb-speed-btn{font-size:11px;font-weight:700;letter-spacing:0.6px;min-width:34px;padding:6px 6px}
+.pb-speed-menu{position:absolute;bottom:calc(100% + 10px);right:0;background:var(--blue);border:1px solid rgba(255,255,255,0.2);padding:4px 0;min-width:120px;display:none;flex-direction:column;box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+.pb-speed.open .pb-speed-menu{display:flex}
+.pb-speed-menu button{background:transparent;border:none;color:#fff;padding:8px 16px;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;text-align:left;cursor:pointer;letter-spacing:0.3px;display:flex;align-items:center;justify-content:space-between}
+.pb-speed-menu button:hover{background:rgba(255,255,255,0.12);color:var(--orange)}
+.pb-speed-menu button.active{color:var(--orange);font-weight:700}
+.pb-speed-menu button.active::after{content:"●";font-size:8px;margin-left:8px}
+
+/* CC button */
+.pb-cc{font-size:10px;font-weight:800;letter-spacing:1px;padding:5px 7px;border:1.5px solid rgba(255,255,255,0.4)}
+.pb-cc:hover{border-color:var(--orange)}
+.pb-cc.active{background:var(--orange);color:#fff;border-color:var(--orange)}
+.pb-cc.active:hover{opacity:0.9;color:#fff}
+
+.modal-meta{padding:22px 28px 24px;color:#fff;overflow-y:auto}
+.modal-meta .v-cat{margin-bottom:10px}
+.modal-meta .v-cat-line{background:rgba(255,255,255,0.4)}
+.modal-meta .v-cat-text{color:rgba(255,255,255,0.7)}
+.modal-meta h3{font-family:'Manrope',sans-serif;font-size:22px;font-weight:800;margin-bottom:10px;letter-spacing:-0.3px;line-height:1.25}
+.modal-meta p{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.65;margin-bottom:0}
+
+@media (max-width:768px){
+  .modal-overlay{padding:0;align-items:stretch}
+  .modal{width:100%;max-width:none;max-height:100vh;height:100vh}
+  .modal-close{top:10px;right:10px;z-index:5}
+  .modal-meta{padding:18px 20px 24px}
+  .modal-meta h3{font-size:18px}
+  .pc-square{width:72px;height:72px}
+  .pc-icon-play-big{border-top-width:17px;border-bottom-width:17px;border-left-width:26px}
+  .pc-icon-pause-big{width:19px;height:26px;border-left-width:7px;border-right-width:7px}
+  .player-bar{padding:30px 10px 8px}
+  .pb-time{font-size:10px}
+}
+@media (max-width:480px){
+  .modal-meta h3{font-size:16px}
+  .modal-meta p{font-size:12px}
+}
+
+/* === CTA === */
+.cta-section{background:var(--blue);padding:52px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+.cta-left h2{font-family:'Manrope',sans-serif;font-size:26px;font-weight:800;color:#fff;margin-bottom:6px;letter-spacing:-0.5px}
+.cta-left p{color:rgba(255,255,255,0.6);font-size:14px}
+.cta-btns{display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--blue);padding:12px 22px;font-weight:700;font-size:13px;border:none;cursor:pointer;text-decoration:none;display:inline-block;border-radius:0;font-family:'Sora',sans-serif}
+.btn-white:hover{opacity:0.9}
+.btn-outline-w{background:transparent;color:#fff;padding:12px 22px;font-weight:600;font-size:13px;border:2px solid rgba(255,255,255,0.45);cursor:pointer;text-decoration:none;display:inline-block;border-radius:0;font-family:'Sora',sans-serif}
+.btn-outline-w:hover{border-color:#fff}
+
+/* === DEV BAR === */
+.dev-bar{background:#eef1f8;border-top:2px dashed #c5cde0;padding:14px 48px;font-size:11px;color:#7285a0;font-family:monospace}
+.dev-bar strong{color:#2758ac}
+</style>
+
+<!-- ============ TOP NAVIGATION ============ -->
+<nav class="topnav">
+  <div class="nav-logo">Enectiva</div>
+  <ul class="nav-menu">
+    <li><a href="#">Služby</a></li>
+    <li><a href="#">Řešení</a></li>
+    <li><a href="#">Technologie</a></li>
+    <li><a href="#">Hardware</a></li>
+    <li><a href="#">Partneři</a></li>
+    <li class="has-dd active">
+      <span>Resources</span>
+      <div class="dropdown">
+        <div class="dd-section-label"><div class="tag-line"></div>Knowledge hub</div>
+        <a href="/resources/edukacni-videa">Edukační videa</a>
+        <a href="#">Blogové články</a>
+        <a href="#">Partnerský program</a>
+        <div class="dd-divider"></div>
+        <div class="dd-section-label"><div class="tag-line"></div>Připravujeme</div>
+        <a href="#" class="disabled">Case studies <span class="dd-soon">Brzy</span></a>
+        <a href="#" class="disabled">Dokumentace <span class="dd-soon">Brzy</span></a>
+        <a href="#" class="disabled">FAQ <span class="dd-soon">Brzy</span></a>
+      </div>
+    </li>
+    <li><a href="#">O nás</a></li>
+    <li><a href="#">Kontakt</a></li>
+  </ul>
+  <a href="https://www.enectiva.cz/cs/vyzkousejte-enectivu/" class="nav-cta">Vyzkoušet demo</a>
+</nav>
+
+<!-- ============ BREADCRUMB ============ -->
+<div class="crumb">
+  <a href="/">Úvod</a><span class="sep">/</span><a href="/resources">Resources</a><span class="sep">/</span><span class="cur">Edukační videa</span>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="section-tag">
+    <div class="tag-line"></div>
+    <div class="tag-text">Resources · Video tutoriály</div>
+  </div>
+  <h1>Objevte funkce Enectivy</h1>
+  <div class="hero-underline"></div>
+  <p>Naučte se pracovat s aplikací Enectiva – od základů po pokročilé funkce pomocí krátkých video tutoriálů.</p>
+  <div class="hero-btns">
+    <a href="#videa" class="btn-orange">Shlédnout videa</a>
+    <a href="https://www.enectiva.cz/cs/vyzkousejte-enectivu/" class="btn-outline-dark">Vyzkoušet demo</a>
+  </div>
+  <div class="hero-count"><strong>24 video tutoriálů</strong> · zdarma pro všechny klienty</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============ FILTERS ============ -->
+<section class="filters">
+  <div class="filter-toolbar">
+    <button class="filter-toggle" id="filterToggle" onclick="toggleFilters()">
+      <span class="ft-icon"><span></span><span></span><span></span></span>
+      <span>Filtr</span>
+      <span class="filter-count" id="filterCount">0</span>
+      <span class="ft-chev"></span>
+    </button>
+    <div class="filter-applied-summary" id="filterSummary"></div>
+  </div>
+
+  <div class="filter-panel" id="filterPanel">
+    <div class="filter-panel-inner">
+      <div class="filters-title"><div class="tag-line"></div>Filtrování obsahu</div>
+
+      <div class="filter-row">
+        <div class="filter-label">Kategorie</div>
+        <div class="chips" data-group="category">
+          <button class="chip active" data-value="all">Vše</button>
+          <button class="chip" data-value="zaciname">Začínáme</button>
+          <button class="chip" data-value="reporting">Reporting</button>
+          <button class="chip" data-value="upozorneni">Upozornění</button>
+          <button class="chip" data-value="energetika">Energetický management</button>
+          <button class="chip" data-value="facility">Facility management</button>
+          <button class="chip" data-value="automatizace">Automatizace budov</button>
+          <button class="chip" data-value="nastaveni">Nastavení &amp; konfigurace</button>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <div class="filter-label">Úroveň pokročilosti</div>
+        <div class="chips" data-group="level">
+          <button class="chip active" data-value="all">Vše</button>
+          <button class="chip" data-value="zacatecnik">Začátečník</button>
+          <button class="chip" data-value="pokrocily">Pokročilý</button>
+          <button class="chip" data-value="expert">Expert</button>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <div class="filter-label">Typ obsahu</div>
+        <div class="chips" data-group="type">
+          <button class="chip active" data-value="all">Vše</button>
+          <button class="chip" data-value="tutorial">Tutoriál</button>
+          <button class="chip" data-value="webinar">Webinář</button>
+          <button class="chip" data-value="case">Case study</button>
+          <button class="chip" data-value="tip">Krátký tip</button>
+        </div>
+      </div>
+
+      <div class="filter-actions">
+        <button class="filter-reset" onclick="resetFilters()">Resetovat filtry</button>
+        <div class="filter-save-btns">
+          <button class="btn-cancel" onclick="closeFilters()">Zrušit</button>
+          <button class="btn-save" onclick="applyFilters()">Uložit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const groups = document.querySelectorAll('.chips');
+  groups.forEach(group=>{
+    group.addEventListener('click',e=>{
+      const chip = e.target.closest('.chip');
+      if(!chip) return;
+      const isAll = chip.dataset.value === 'all';
+      const chips = group.querySelectorAll('.chip');
+      if(isAll){
+        chips.forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+      } else {
+        group.querySelector('.chip[data-value="all"]').classList.remove('active');
+        chip.classList.toggle('active');
+        if(!group.querySelector('.chip.active')){
+          group.querySelector('.chip[data-value="all"]').classList.add('active');
+        }
+      }
+    });
+  });
+})();
+
+function toggleFilters(){
+  const panel = document.getElementById('filterPanel');
+  const btn = document.getElementById('filterToggle');
+  const isOpen = panel.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+}
+
+function closeFilters(){
+  document.getElementById('filterPanel').classList.remove('open');
+  document.getElementById('filterToggle').classList.remove('open');
+}
+
+function applyFilters(){
+  const btn = document.getElementById('filterToggle');
+  const countEl = document.getElementById('filterCount');
+  const summaryEl = document.getElementById('filterSummary');
+  const groups = document.querySelectorAll('.chips');
+  let count = 0;
+  const labels = [];
+  groups.forEach(group=>{
+    const active = group.querySelectorAll('.chip.active:not([data-value="all"])');
+    count += active.length;
+    active.forEach(c=>labels.push(c.textContent.trim()));
+  });
+  closeFilters();
+  if(count > 0){
+    btn.classList.add('applied');
+    countEl.textContent = count;
+    summaryEl.innerHTML = 'Aktivní filtry: <strong>' + labels.slice(0,3).join(' · ') + (labels.length>3 ? ' +'+(labels.length-3) : '') + '</strong>';
+  } else {
+    btn.classList.remove('applied');
+    summaryEl.textContent = '';
+  }
+}
+
+function resetFilters(){
+  document.querySelectorAll('.chips').forEach(group=>{
+    group.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+    group.querySelector('.chip[data-value="all"]').classList.add('active');
+  });
+  document.getElementById('filterToggle').classList.remove('applied');
+  document.getElementById('filterSummary').textContent = '';
+}
+</script>
+
+<!-- ============ VIDEOS ============ -->
+<section class="videos-section" id="videa">
+  <div class="video-grid">
+
+    <div class="video-card" data-video-id="v01" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+      <div class="video-thumb"><div class="thumb-lines"></div><div class="play-wrap"><div class="play-tri"></div></div><div class="v-badge">Nové</div><div class="v-watched-tag">Rozkoukané</div><div class="v-dur">12:34</div><div class="v-progress"><div class="v-progress-fill"></div></div></div>
+      <div class="video-info">
+        <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text">Začínáme</div></div>
+        <div class="v-title">Úvod do Enectivy – první přihlášení a základní nastavení</div>
+        <div class="v-desc">Provedeme vás prvním přihlášením, představíme dashboard a ukážeme základní orientaci v platformě.</div>
+        <div class="v-meta">1 200 zhlédnutí</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-video-id="v02" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4">
+      <div class="video-thumb"><div class="thumb-lines"></div><div class="play-wrap"><div class="play-tri"></div></div><div class="v-watched-tag">Rozkoukané</div><div class="v-dur">8:15</div><div class="v-progress"><div class="v-progress-fill"></div></div></div>
+      <div class="video-info">
+        <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text">Upozornění</div></div>
+        <div class="v-title">Jak nastavit odečty energií a upozornění na anomálie</div>
+        <div class="v-desc">Naučte se konfigurovat automatické odečty a notifikace při překročení limitů spotřeby energií.</div>
+        <div class="v-meta">845 zhlédnutí</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-video-id="v03" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4">
+      <div class="video-thumb"><div class="thumb-lines"></div><div class="play-wrap"><div class="play-tri"></div></div><div class="v-badge">Nové</div><div class="v-watched-tag">Rozkoukané</div><div class="v-dur">15:02</div><div class="v-progress"><div class="v-progress-fill"></div></div></div>
+      <div class="video-info">
+        <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text">Reporting</div></div>
+        <div class="v-title">Tvorba reportů a export dat – kompletní průvodce</div>
+        <div class="v-desc">Krok za krokem si projdeme tvorbu vlastních reportů, jejich plánování a export do PDF i Excelu.</div>
+        <div class="v-meta">632 zhlédnutí</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-video-id="v04" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4">
+      <div class="video-thumb"><div class="thumb-lines"></div><div class="play-wrap"><div class="play-tri"></div></div><div class="v-watched-tag">Rozkoukané</div><div class="v-dur">10:48</div><div class="v-progress"><div class="v-progress-fill"></div></div></div>
+      <div class="video-info">
+        <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text">Facility management</div></div>
+        <div class="v-title">Správa dokumentů a revizí v modulu Facility</div>
+        <div class="v-desc">Centralizovaná evidence revizí, smluv a technické dokumentace s automatickým připomínáním termínů.</div>
+        <div class="v-meta">410 zhlédnutí</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-video-id="v05" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4">
+      <div class="video-thumb"><div class="thumb-lines"></div><div class="play-wrap"><div class="play-tri"></div></div><div class="v-watched-tag">Rozkoukané</div><div class="v-dur">6:20</div><div class="v-progress"><div class="v-progress-fill"></div></div></div>
+      <div class="video-info">
+        <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text">Automatizace budov</div></div>
+        <div class="v-title">Propojení IoT zařízení – LoRa, Sigfox a NB IoT sítě</div>
+        <div class="v-desc">Jak připojit chytré senzory přes nízkoenergetické sítě a získat tak data v reálném čase.</div>
+        <div class="v-meta">298 zhlédnutí</div>
+      </div>
+    </div>
+
+    <div class="video-card" data-video-id="v06" data-video-url="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4">
+      <div class="video-thumb"><div class="thumb-lines"></div><div class="play-wrap"><div class="play-tri"></div></div><div class="v-watched-tag">Rozkoukané</div><div class="v-dur">9:05</div><div class="v-progress"><div class="v-progress-fill"></div></div></div>
+      <div class="video-info">
+        <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text">Nastavení &amp; konfigurace</div></div>
+        <div class="v-title">Správa uživatelů, rolí a přístupových oprávnění</div>
+        <div class="v-desc">Vytváření týmových účtů, přidělování rolí a nastavení granulárních přístupových práv.</div>
+        <div class="v-meta">521 zhlédnutí</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ VIDEO MODAL ============ -->
+<div class="modal-overlay" id="videoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Zavřít video">
+      <span class="mc-x">×</span>
+    </button>
+
+    <div class="modal-video-wrap" id="playerWrap">
+      <video class="modal-video" id="modalVideo" playsinline preload="metadata" crossorigin="anonymous">
+        <track id="modalTrack" kind="subtitles" srclang="cs" label="Čeština" default>
+      </video>
+
+      <!-- Centrální play/pause -->
+      <button class="player-center" id="centerBtn" aria-label="Přehrát / Pozastavit">
+        <div class="pc-square">
+          <div class="pc-icon-play-big"></div>
+          <div class="pc-icon-pause-big"></div>
+        </div>
+      </button>
+
+      <!-- Spodní lišta s ovládáním -->
+      <div class="player-bar" id="playerBar">
+        <div class="pb-progress" id="pbProgress" role="slider" aria-label="Časová osa">
+          <div class="pb-buffered" id="pbBuffered"></div>
+          <div class="pb-played" id="pbPlayed"></div>
+          <div class="pb-handle" id="pbHandle"></div>
+        </div>
+
+        <div class="pb-row">
+          <div class="pb-left">
+            <div class="pb-time">
+              <span id="pbTimeCur">0:00</span>
+              <span class="pb-time-sep">/</span>
+              <span id="pbTimeDur">0:00</span>
+            </div>
+          </div>
+
+          <div class="pb-right">
+            <div class="pb-speed" id="pbSpeed">
+              <button class="pb-btn pb-speed-btn" id="pbSpeedBtn" aria-label="Rychlost přehrávání">1×</button>
+              <div class="pb-speed-menu" id="pbSpeedMenu">
+                <button data-speed="2">2×</button>
+                <button data-speed="1.5">1.5×</button>
+                <button data-speed="1.25">1.25×</button>
+                <button data-speed="1" class="active">Normální</button>
+                <button data-speed="0.75">0.75×</button>
+                <button data-speed="0.5">0.5×</button>
+              </div>
+            </div>
+
+            <button class="pb-btn pb-cc" id="pbCc" aria-label="Titulky">CC</button>
+
+            <div class="pb-volume" id="pbVolume">
+              <button class="pb-btn" id="pbVolBtn" aria-label="Hlasitost">
+                <svg viewBox="0 0 24 24"><polygon points="3,9 3,15 8,15 13,20 13,4 8,9" fill="currentColor" stroke="none"/><path d="M16 8 Q19 12 16 16" fill="none"/><path d="M18 5 Q23 12 18 19" fill="none"/></svg>
+              </button>
+              <div class="pb-vol-slider" id="pbVolSlider">
+                <div class="pb-vol-fill" id="pbVolFill"></div>
+                <div class="pb-vol-handle" id="pbVolHandle"></div>
+              </div>
+            </div>
+
+            <button class="pb-btn" id="pbFs" aria-label="Celá obrazovka">
+              <svg viewBox="0 0 24 24"><polyline points="4,9 4,4 9,4"/><polyline points="20,9 20,4 15,4"/><polyline points="4,15 4,20 9,20"/><polyline points="20,15 20,20 15,20"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-meta">
+      <div class="v-cat"><div class="v-cat-line"></div><div class="v-cat-text" id="modalCat">Kategorie</div></div>
+      <h3 id="modalTitle">Název videa</h3>
+      <p id="modalDesc">Popis videa.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const modal = document.getElementById('videoModal');
+  const video = document.getElementById('modalVideo');
+  const modalCat = document.getElementById('modalCat');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const closeBtn = document.getElementById('modalClose');
+
+  const playerWrap = document.getElementById('playerWrap');
+  const centerBtn = document.getElementById('centerBtn');
+  const playerBar = document.getElementById('playerBar');
+  const pbProgress = document.getElementById('pbProgress');
+  const pbBuffered = document.getElementById('pbBuffered');
+  const pbPlayed = document.getElementById('pbPlayed');
+  const pbHandle = document.getElementById('pbHandle');
+  const pbVolume = document.getElementById('pbVolume');
+  const pbVolBtn = document.getElementById('pbVolBtn');
+  const pbVolSlider = document.getElementById('pbVolSlider');
+  const pbVolFill = document.getElementById('pbVolFill');
+  const pbVolHandle = document.getElementById('pbVolHandle');
+  const pbTimeCur = document.getElementById('pbTimeCur');
+  const pbTimeDur = document.getElementById('pbTimeDur');
+  const pbSpeed = document.getElementById('pbSpeed');
+  const pbSpeedBtn = document.getElementById('pbSpeedBtn');
+  const pbSpeedMenu = document.getElementById('pbSpeedMenu');
+  const pbCc = document.getElementById('pbCc');
+  const pbFs = document.getElementById('pbFs');
+
+  // === SIMULACE PŘEHRÁVÁNÍ (prototyp bez reálných videí) ===
+  const state = {
+    cardId:null, time:0, duration:0, playing:false, rate:1,
+    volume:1, muted:false, lastVolume:1, cc:false
+  };
+  const savedState = {};
+  let simInterval = null;
+  let barHideTimer = null;
+
+  function parseDur(str){
+    const parts = (str||'').split(':').map(p=>parseInt(p,10));
+    if(parts.length === 2) return parts[0]*60 + parts[1];
+    if(parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+    return 0;
+  }
+  function fmtTime(s){
+    if(!isFinite(s) || s < 0) s = 0;
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+  function updateProgress(){
+    const pct = state.duration ? (state.time / state.duration) * 100 : 0;
+    pbPlayed.style.width = pct + '%';
+    pbHandle.style.left = pct + '%';
+    pbTimeCur.textContent = fmtTime(state.time);
+    pbTimeDur.textContent = fmtTime(state.duration);
+    // Fake buffered - vždy o 10% dál než played
+    pbBuffered.style.width = Math.min(100, pct + 10) + '%';
+  }
+
+  function scheduleBarHide(){
+    clearTimeout(barHideTimer);
+    if(state.playing){
+      barHideTimer = setTimeout(()=>{
+        if(state.playing) playerBar.classList.add('hidden');
+      }, 2500);
+    }
+  }
+
+  function play(){
+    if(state.playing || !state.duration) return;
+    state.playing = true;
+    centerBtn.classList.add('hidden');           // mizí ihned
+    centerBtn.classList.add('is-pause');
+    scheduleBarHide();
+    simInterval = setInterval(()=>{
+      state.time += 0.1 * state.rate;
+      if(state.time >= state.duration){
+        state.time = state.duration;
+        pause();
+        return;
+      }
+      updateProgress();
+      saveCurrentToCard();
+    }, 100);
+  }
+
+  function pause(){
+    state.playing = false;
+    centerBtn.classList.remove('hidden');
+    centerBtn.classList.remove('is-pause');
+    playerBar.classList.remove('hidden');
+    clearTimeout(barHideTimer);
+    if(simInterval){ clearInterval(simInterval); simInterval = null; }
+    saveCurrentToCard();
+  }
+
+  function togglePlay(){
+    if(state.playing) pause(); else play();
+  }
+
+  function saveCurrentToCard(){
+    if(!state.cardId || state.time <= 0) return;
+    savedState[state.cardId] = { time: state.time, duration: state.duration };
+    const card = document.querySelector('.video-card[data-video-id="'+state.cardId+'"]');
+    if(card){
+      card.classList.add('watched');
+      const fill = card.querySelector('.v-progress-fill');
+      if(fill && state.duration > 0){
+        fill.style.width = Math.min(100, (state.time/state.duration)*100) + '%';
+      }
+    }
+  }
+
+  function openVideo(card){
+    const id = card.dataset.videoId;
+    const title = card.querySelector('.v-title').textContent;
+    const desc = card.querySelector('.v-desc').textContent;
+    const cat = card.querySelector('.v-cat-text').textContent;
+    const dur = card.querySelector('.v-dur').textContent.trim();
+
+    // Ulož stav předchozího videa
+    if(state.cardId && state.cardId !== id){
+      if(state.playing) pause();
+      saveCurrentToCard();
+    }
+
+    state.cardId = id;
+    state.duration = parseDur(dur);
+    state.time = (savedState[id] && savedState[id].time) || 0;
+    state.playing = false;
+    state.rate = 1;
+    pbSpeedBtn.textContent = '1×';
+    pbSpeedMenu.querySelectorAll('button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.speed === '1');
+    });
+
+    modalCat.textContent = cat;
+    modalTitle.textContent = title;
+    modalDesc.textContent = desc;
+
+    // Reset center button state
+    centerBtn.classList.remove('hidden');
+    centerBtn.classList.remove('is-pause');
+    playerBar.classList.remove('hidden');
+
+    updateProgress();
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeVideo(){
+    if(state.playing) pause();
+    saveCurrentToCard();
+    if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+    modal.classList.remove('open');
+    document.body.classList.remove('modal-open');
+    pbSpeed.classList.remove('open');
+    state.cardId = null;
+  }
+
+  // --- Eventy ---
+  document.querySelectorAll('.video-card').forEach(card=>{
+    card.addEventListener('click', ()=>openVideo(card));
+  });
+
+  closeBtn.addEventListener('click', closeVideo);
+  modal.addEventListener('click', e=>{ if(e.target === modal) closeVideo(); });
+
+  document.addEventListener('keydown', e=>{
+    if(!modal.classList.contains('open')) return;
+    if(e.key === 'Escape'){ closeVideo(); return; }
+    if(e.key === ' ' || e.code === 'Space'){ e.preventDefault(); togglePlay(); }
+    if(e.key === 'f' || e.key === 'F') toggleFullscreen();
+    if(e.key === 'm' || e.key === 'M') toggleMute();
+    if(e.key === 'c' || e.key === 'C') toggleCC();
+  });
+
+  centerBtn.addEventListener('click', e=>{ e.stopPropagation(); togglePlay(); });
+
+  // Klik kamkoliv na přehrávač = toggle play (vrátí tlačítko zpět)
+  playerWrap.addEventListener('click', e=>{
+    // Ignoruj kliknutí na controls
+    if(e.target.closest('.player-bar')) return;
+    if(e.target.closest('.player-center')) return;
+    togglePlay();
+  });
+
+  // Pohyb myší zobrazí lištu, pak ji zase schová při přehrávání
+  playerWrap.addEventListener('mousemove', ()=>{
+    playerBar.classList.remove('hidden');
+    scheduleBarHide();
+  });
+  playerWrap.addEventListener('mouseleave', ()=>{
+    if(state.playing){
+      clearTimeout(barHideTimer);
+      barHideTimer = setTimeout(()=>{
+        if(state.playing) playerBar.classList.add('hidden');
+      }, 800);
+    }
+  });
+
+  // --- Scrubber ---
+  function seekToEvent(e){
+    const rect = pbProgress.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const pct = Math.max(0, Math.min(1, x / rect.width));
+    state.time = pct * state.duration;
+    updateProgress();
+    saveCurrentToCard();
+  }
+  let dragging = false;
+  pbProgress.addEventListener('mousedown', e=>{ e.stopPropagation(); dragging = true; pbProgress.classList.add('dragging'); seekToEvent(e); });
+  document.addEventListener('mousemove', e=>{ if(dragging) seekToEvent(e); });
+  document.addEventListener('mouseup', ()=>{ if(dragging){ dragging = false; pbProgress.classList.remove('dragging'); } });
+
+  // --- Volume ---
+  function setVolume(v){
+    v = Math.max(0, Math.min(1, v));
+    state.volume = v;
+    state.muted = (v === 0);
+    pbVolFill.style.width = (v * 100) + '%';
+    pbVolHandle.style.left = (v * 100) + '%';
+  }
+  function toggleMute(){
+    if(state.muted || state.volume === 0) setVolume(state.lastVolume || 1);
+    else { state.lastVolume = state.volume; setVolume(0); }
+  }
+  pbVolBtn.addEventListener('click', e=>{ e.stopPropagation(); toggleMute(); });
+
+  function volFromEvent(e){
+    const rect = pbVolSlider.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    setVolume(x / rect.width);
+  }
+  let volDrag = false;
+  pbVolSlider.addEventListener('mousedown', e=>{ e.stopPropagation(); volDrag = true; pbVolume.classList.add('active'); volFromEvent(e); });
+  document.addEventListener('mousemove', e=>{ if(volDrag) volFromEvent(e); });
+  document.addEventListener('mouseup', ()=>{ if(volDrag){ volDrag = false; pbVolume.classList.remove('active'); } });
+
+  setVolume(1);
+
+  // --- Speed ---
+  pbSpeedBtn.addEventListener('click', e=>{ e.stopPropagation(); pbSpeed.classList.toggle('open'); });
+  pbSpeedMenu.querySelectorAll('button').forEach(b=>{
+    b.addEventListener('click', e=>{
+      e.stopPropagation();
+      const sp = parseFloat(b.dataset.speed);
+      state.rate = sp;
+      pbSpeedBtn.textContent = sp === 1 ? '1×' : sp + '×';
+      pbSpeedMenu.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      pbSpeed.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', e=>{
+    if(!pbSpeed.contains(e.target)) pbSpeed.classList.remove('open');
+  });
+
+  // --- CC ---
+  function toggleCC(){
+    state.cc = !state.cc;
+    pbCc.classList.toggle('active', state.cc);
+  }
+  pbCc.addEventListener('click', e=>{ e.stopPropagation(); toggleCC(); });
+
+  // --- Fullscreen ---
+  function toggleFullscreen(){
+    if(!document.fullscreenElement){
+      (playerWrap.requestFullscreen || playerWrap.webkitRequestFullscreen || function(){}).call(playerWrap);
+    } else {
+      (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document);
+    }
+  }
+  pbFs.addEventListener('click', e=>{ e.stopPropagation(); toggleFullscreen(); });
+})();
+</script>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section">
+  <div class="cta-left">
+    <h2>Máte otázku k platformě?</h2>
+    <p>Vyzkoušejte si Enectivu zdarma nebo se ozvěte našemu týmu.</p>
+  </div>
+  <div class="cta-btns">
+    <a href="https://www.enectiva.cz/cs/vyzkousejte-enectivu/" class="btn-orange">Vyzkoušet demo</a>
+    <a href="https://www.enectiva.cz/cs/kontaktujte-nas/" class="btn-outline-w">Kontaktujte nás</a>
+  </div>
+</section>
+
+<div class="dev-bar">
+  &#x1F527; <strong>Pro vývojáře:</strong> --blue: #2758ac | --orange: #f47a37 | Manrope 800 (headings) | Sora 400/600/700 (body) | border-radius: 0 všude | URL: /resources/edukacni-videa
+</div>
